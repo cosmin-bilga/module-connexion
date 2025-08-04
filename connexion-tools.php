@@ -9,7 +9,7 @@ $verbose = true;
 function sql_exec(string $sql, object $conn)
 {
     // Faire en sorte qu'on recupere l'erreur pour le try/catch
-    mysqli_report(MYSQLI_REPORT_STRICT | MYSQLI_REPORT_ALL);
+    //mysqli_report(MYSQLI_REPORT_STRICT | MYSQLI_REPORT_ALL);
 
     try {
         $result = $conn->query($sql);
