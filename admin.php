@@ -38,11 +38,12 @@ if (!(isset($_SESSION["logged_user"]) and $_SESSION["logged_user"] == "admin")) 
 
     ?>
     <header>
+        <img src="assets/media/squirrel.webp">
         <nav>
             <?php
             if (isset($_SESSION["logged_user"]))
-                echo " <a href=\"index.php\">Page d'accueil</a> <a href=\"profil.php\">Modifier Profil</a> <form action=\"index.php\" method=\"post\"><input type=\"submit\" name=\"Deconnexion\" value=\"Deconnexion\"></form>";
-            else echo "<a href=\"index.php\">Page d'accueil</a> <a href=\"connexion.php\">Connexion</a> <a href=\"inscription.php\">Inscription</a>"; ?>
+                echo " <a href=\"index.php\"><img src=\"assets/media/home-svgrepo-com.svg\">Page d'accueil</a> <a href=\"profil.php\"><img src=\"assets/media/profile.svg\">Modifier Profil</a> <form action=\"index.php\" method=\"post\"><img src=\"assets/media/disconnect.svg\"><input type=\"submit\" name=\"Deconnexion\" value=\"Deconnexion\"></form>";
+            ?>
         </nav>
     </header>
     <main>
@@ -66,12 +67,14 @@ if (!(isset($_SESSION["logged_user"]) and $_SESSION["logged_user"] == "admin")) 
                         echo "<td>$cell</td>";
                     echo "</tr>";
                     $row = $result->fetch_assoc();
-                    //print_r($row);
                 }
                 $conn->close();
                 ?>
             </tbody>
     </main>
+    <footer>
+        <p>2025 - Cosmin Bilga</p>
+    </footer>
 </body>
 
 </html>

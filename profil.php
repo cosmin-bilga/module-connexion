@@ -79,7 +79,7 @@ function check_password(): string
     } elseif ($_POST["password"] === "") // Si on ne veut pas changer le password
         return "ok";
     else {
-        preg_match("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/", $_POST["password"], $matches);
+        preg_match("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-+=()[\]{}]).{8,}$/", $_POST["password"], $matches);
         //echo "MATCH<br />";
         //print_r($matches);
         if ($matches) {
@@ -169,13 +169,14 @@ function check_modification(): string //CAN ONLY BE CALLED ONCE DUE TO INCLUDE E
 
 <body>
     <header>
+        <img src="assets/media/squirrel.webp">
         <nav>
             <?php
             if (isset($_SESSION["logged_user"]) and $_SESSION["logged_user"] === "admin")
-                echo "<a href=\"admin.php\">Page administrative</a>";
+                echo "<a href=\"admin.php\"><img src=\"assets/media/admin.svg\">Page administrative</a>";
             if (isset($_SESSION["logged_user"]))
-                echo " <a href=\"index.php\">Page d'accueil</a> <a href=\"profil.php\">Modifier Profil</a> <form action=\"index.php\" method=\"post\"><input type=\"submit\" name=\"Deconnexion\" value=\"Deconnexion\"></form>";
-            else echo "<a href=\"index.php\">Page d'accueil</a> <a href=\"connexion.php\">Connexion</a> <a href=\"inscription.php\">Inscription</a>"; ?>
+                echo " <a href=\"index.php\"><img src=\"assets/media/home-svgrepo-com.svg\">Page d'accueil</a> <form action=\"index.php\" method=\"post\"><img src=\"assets/media/disconnect.svg\"><input type=\"submit\" name=\"Deconnexion\" value=\"Deconnexion\"></form>";
+            ?>
         </nav>
     </header>
     <main>
@@ -194,9 +195,12 @@ function check_modification(): string //CAN ONLY BE CALLED ONCE DUE TO INCLUDE E
             <?php if (isset($_SESSION["error"])) echo "<p class=\"input-error\">" . $_SESSION["error"] . "</p>"; ?>
             <?php if (isset($_SESSION["message"])) echo "<p class=\"input-message\">" . $_SESSION["message"] . "</p>";
             $_SESSION["message"] = NULL; ?>
-            <input type="submit" value="Mettre à jour" name="modif">
+            <input type="submit" value="Mettre à jour" name="modif" class="main-form">
         </form>
     </main>
+    <footer>
+        <p>2025 - Cosmin Bilga</p>
+    </footer>
 </body>
 
 </html>

@@ -1,8 +1,15 @@
 <?php
-$server = "localhost";
-$user = "root";
-$password = "";
-$database = "moduleconnexion";
+
+if (file_exists("connexion-variables.php"))
+    include "connexion-variables.php";
+else {
+    // Variables pour la version locale
+    $server = "localhost";
+    $user = "root";
+    $password = "";
+    $database = "moduleconnexion";
+}
+
 
 $verbose = true;
 

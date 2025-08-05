@@ -13,6 +13,7 @@ if (isset($_POST["login"]))
         $ok = connexion_utilisateur();
         if ($ok === "Login ok") {
             $_SESSION["logged_user"] = $_POST["login"];
+            $_SESSION["message"] = "Bienvenue " . $_POST["login"] . " !";
             header('Location: index.php');
             exit();
         } else
@@ -58,13 +59,10 @@ function connexion_utilisateur()
 
 <body>
     <header>
+        <img src="assets/media/squirrel.webp">
         <nav>
             <?php
-            if (isset($_SESSION["logged_user"]) and $_SESSION["logged_user"] === "admin")
-                echo "<a href=\"admin.php\">Page administrative</a>";
-            if (isset($_SESSION["logged_user"]))
-                echo " <a href=\"index.php\">Page d'accueil</a> <a href=\"profil.php\">Modifier Profil</a> <form action=\"index.php\" method=\"post\"><input type=\"submit\" name=\"Deconnexion\" value=\"Deconnexion\"></form>";
-            if (!isset($_SESSION["logged_user"])) echo "<a href=\"index.php\">Page d'accueil</a> <a href=\"inscription.php\">Inscription</a>"; ?>
+            if (!isset($_SESSION["logged_user"])) echo "<a href=\"index.php\"><img src=\"assets/media/home-svgrepo-com.svg\">Page d'accueil</a> <a href=\"inscription.php\"><img src=\"assets/media/register.svg\">Inscription</a>"; ?>
         </nav>
     </header>
     <main>
@@ -76,9 +74,12 @@ function connexion_utilisateur()
             <input type="password" name="password" id="password">
             <?php if (isset($_SESSION["error"])) echo "<p class=\"input-error\">" . $_SESSION["error"] . "</p>"; ?>
             <?php if (isset($_SESSION["message"])) echo "<p class=\"input-message\">" . $_SESSION["message"] . "</p>"; ?>
-            <input type="submit" value="Connexion">
+            <input type="submit" value="Connexion" class="main-form">
         </form>
     </main>
+    <footer>
+        <p>2025 - Cosmin Bilga</p>
+    </footer>
 </body>
 
 </html>

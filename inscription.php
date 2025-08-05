@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+
+// Si logged on redirect vers la page d'accueil
 if (isset($_SESSION["logged_user"])) {
     header('Location: index.php');
     exit();
@@ -13,15 +15,14 @@ $_SESSION["message"] = $return;
 if (count($_POST) === 0)
     $_SESSION["message"] = NULL;
 
-
-//echo $return;
 if ($return === "Inscription reussie!") {
-    //echo $return;
     $_SESSION["message"] = $return;
     header('Location: connexion.php');
     exit();
 }
 
+
+// Fonction qui check qui login donné correspond aux demandes et n'exista pas deja
 function check_login($conn): string
 {
     if (!isset($_POST["login"]))
@@ -41,6 +42,7 @@ function check_login($conn): string
     }
 }
 
+// Check que le password est valide et qu'on l'a bien repete
 function check_password(): string
 {
     if (!(isset($_POST["password"]) and isset($_POST["password-repeat"])))
@@ -48,9 +50,7 @@ function check_password(): string
     elseif ($_POST["password"] !== $_POST["password-repeat"])
         return "Password et sa confirmation ne sont par identinques. Veuillez les retaper!";
     else {
-        preg_match("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/", $_POST["password"], $matches);
-        //echo "MATCH<br />";
-        //print_r($matches);
+        preg_match("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-+=()[\]{}]).{8,}$/", $_POST["password"], $matches);
         if ($matches) {
             return "ok";
         } else
@@ -59,6 +59,7 @@ function check_password(): string
 }
 
 
+// Protection contre les injections + password hash
 function security_checks()
 {
 
@@ -66,21 +67,16 @@ function security_checks()
     $_POST["login"] = htmlspecialchars(trim($_POST["login"]), ENT_QUOTES, "UTF-8");
     $_POST["nom"] = htmlspecialchars(trim($_POST["nom"]), ENT_QUOTES, "UTF-8");
     $_POST["prenom"] = htmlspecialchars(trim($_POST["prenom"]), ENT_QUOTES, "UTF-8");
-
-    // TODO HASH PASSWORD
     $_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT);
 }
 
-function check_inscription(): string //CAN ONLY BE CALLED ONCE DUE TO INCLUDE ERROR
+// Fonction qui verifie les donnée passées dans le form et insere les données dans la DB si tout ok
+function check_inscription(): string
 {
 
     if (count($_POST) > 0) {
-        //if ("connexion-tools.php") 
-        //print_r(get_included_files());
         include "connexion-tools.php";
         $conn = new mysqli($server, $user, $password, $database);
-
-        //print_r($_POST);
 
         if ($conn->connect_errno) {
             echo "Echec de connexion à la DB. Veuillez essayer ulterieurement: " . $mysqli->connect_error;
@@ -88,20 +84,14 @@ function check_inscription(): string //CAN ONLY BE CALLED ONCE DUE TO INCLUDE ER
         }
 
         $ok = check_login($conn);
-
         if ($ok !== "ok")
             return $ok;
 
-        //echo "??";
         $ok = check_password();
-
         if ($ok !== "ok")
             return $ok;
-        //echo "??!";
-
 
         security_checks();
-
 
         $sql = "INSERT INTO utilisateurs(login,nom,prenom,password) VALUES('" . $_POST["login"] . "','" .
             $_POST["nom"] . "','" .
@@ -130,17 +120,15 @@ function check_inscription(): string //CAN ONLY BE CALLED ONCE DUE TO INCLUDE ER
 
 <body>
     <header>
+        <img src="assets/media/squirrel.webp">
         <nav>
             <?php
-            if (isset($_SESSION["logged_user"]) and $_SESSION["logged_user"] === "admin")
-                echo "<a href=\"admin.php\">Page administrative</a>";
-            if (isset($_SESSION["logged_user"]))
-                echo " <a href=\"index.php\">Page d'accueil</a> <a href=\"profil.php\">Modifier Profil</a> <form action=\"index.php\" method=\"post\"><input type=\"submit\" name=\"Deconnexion\" value=\"Deconnexion\"></form>";
-            if (!isset($_SESSION["logged_user"])) echo "<a href=\"index.php\">Page d'accueil</a> <a href=\"connexion.php\">Connexion</a>"; ?>
+            if (!isset($_SESSION["logged_user"])) echo "<a href=\"index.php\"><img src=\"assets/media/home-svgrepo-com.svg\">Page d'accueil</a> <a href=\"connexion.php\"><img src=\"assets/media/login.svg\">Connexion</a>"; ?>
         </nav>
     </header>
     <main>
         <form action="inscription.php" method="post">
+            <p>Inscription</p>
             <label for="login">Login:</label>
             <input type="text" name="login" id="login" <?php if (isset($_POST["login"])) echo "value=\"" . $_POST["login"] . "\"" ?>>
             <label for="nom">Nom:</label>
@@ -153,9 +141,12 @@ function check_inscription(): string //CAN ONLY BE CALLED ONCE DUE TO INCLUDE ER
             <input type="password" name="password-repeat" id="password-repeat">
             <?php if (isset($_SESSION["message"])) echo "<p class=\"input-message\">" . $_SESSION["message"] . "</p>";
             $_SESSION["message"] = NULL; ?>
-            <input type="submit" value="Inscription">
+            <input type="submit" value="Inscription" class="main-form">
         </form>
     </main>
+    <footer>
+        <p>2025 - Cosmin Bilga</p>
+    </footer>
 </body>
 
 </html>

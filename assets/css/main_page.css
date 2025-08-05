@@ -1,8 +1,15 @@
+@font-face {
+    font-family: "Funnel";
+    src: url("../fonts/FunnelSans-VariableFont_wght.ttf");
+}
+
 *
 {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Funnel", Verdana, Geneva, Tahoma, sans-serif;
+ 
 }
 
 a {
@@ -20,16 +27,36 @@ body
 {
     width: 100vw;
     overflow-x: hidden;
-    background-color: lightskyblue;
+    background-color: rgb(250, 187, 135);
+    
+}
+
+/* ------- HEADER ------------ */
+
+
+header
+{
+    height: 8vh;
+    display: flex;
+    background-color: rgb(49, 49, 81);
+    align-items: center;
+}
+
+header > img
+{
+    width: 15vw;
+    height: 5vh;
+    object-fit: contain;
+    margin-right: 15vw;
 }
 
 header > nav
 {
+    width: 70vw;
     display: flex;
     justify-content: space-around;
     align-items: center;
     height: 5vh;
-    background-color: rgb(49, 49, 81);
 }
 
 nav
@@ -38,38 +65,60 @@ nav
     font-size: bold;
 }
 
+nav > a:hover, nav input[type="submit"]:hover
+{
+    background-color: rgb(108, 108, 176);
+}
+
+nav > a, nav input[type="submit"]
+{
+    height: 100%;
+   
+}
+
+nav > a, nav > form
+{
+    display: flex;
+    align-items: center;
+    height: 5vh;
+    
+}
+
+nav input[type="submit"]
+{
+    color: white;
+    background-color: rgb(49, 49, 81);
+    border: none;
+    height: 100%;
+}
+
+nav img
+{
+    height: 5vh;
+    aspect-ratio: 1 / 1;
+    margin: 0px;
+}
+
+
+/* ------------ MAIN ------------*/
+
+
 main
 {
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    min-height: 90vh;
 }
 
-main form{
-    display: flex;
-    flex-direction: column;
-    margin: 20px;
-    border: 1px solid blueviolet;
-    border-radius: 20px;
-    padding: 15px;
-    max-width: 30vw;
-}
 
-label
-{
-    margin-top: 5px;
-}
 
-input[type="text"], input[type="password"]
-{
-    padding: 2px;
-}
+
 
  table, td, th {
     border: 1px solid black;
     border-collapse: collapse;
-    padding: 3px;
+    padding: 5px;
 }
 
 .input-error
@@ -88,4 +137,84 @@ input[type="text"], input[type="password"]
     color: rgb(0, 0, 0);
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+.index-message
+{
+    padding: 3px;
+    background-color: yellow;
+    color: rgb(0, 0, 0);
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+table{
+    background-color: beige;
+    max-width: 80vw;
+}
+
+.article
+{
+    margin-left: 5vw;
+    margin-right: 5vw;
+    margin-bottom: 5vh;
+}
+
+.article h2,h3
+{
+    margin-top: 5vh;
+}
+
+/* ----------- FORMS -----------*/
+
+main form{
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    border: 1px solid blueviolet;
+    border-radius: 20px;
+    padding: 15px;
+    max-width: 30vw;
+    background-color: rgb(178, 137, 216);
+}
+
+label
+{
+    margin-top: 5px;
+}
+
+input[type="text"], input[type="password"]
+{
+    padding: 2px;
+}
+
+.main-form:hover
+{
+    background-color: rgb(11, 240, 11);
+}
+
+.main-form
+{
+    margin-top: 10px;
+}
+
+form > p
+{
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+
+/*  -------------  FOOTER ---------- */
+
+footer
+{
+    
+    width: 100vw;
+    height: 5vh;
+    color: white;
+    padding-left: 20vw;
+    background-color: black;
 }

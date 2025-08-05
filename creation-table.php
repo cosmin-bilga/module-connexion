@@ -32,7 +32,7 @@ $sql = "CREATE TABLE utilisateurs(
 sql_exec($sql, $conn);
 
 // Ajouter à la BD le compte admin
-$sql = "INSERT INTO utilisateurs(login, prenom, nom, password) VALUES ('admin','admin','admin','admin');";
+$sql = "INSERT INTO utilisateurs(login, prenom, nom, password) VALUES ('admin','admin','admin','$2y$10\$Q2B0qo2PsAO7yMukJ.UnzeXls2iCaK3D74zctHlz9hiyHcChdk/By');";
 sql_exec($sql, $conn);
 
 $conn->close();
