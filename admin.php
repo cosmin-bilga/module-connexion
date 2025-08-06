@@ -29,7 +29,7 @@ if (!(isset($_SESSION["logged_user"]) and $_SESSION["logged_user"] == "admin")) 
         exit();
     }
 
-    $sql = "SELECT * FROM utilisateurs;";
+    $sql = "SELECT id,login,nom,prenom FROM utilisateurs;";
     $result = sql_exec($sql, $conn);
     if (!isset($result)) {
         echo "Erreur de connexion à la DB";
@@ -71,6 +71,7 @@ if (!(isset($_SESSION["logged_user"]) and $_SESSION["logged_user"] == "admin")) 
                 $conn->close();
                 ?>
             </tbody>
+        </table>
     </main>
     <footer>
         <p>2025 - Cosmin Bilga</p>
