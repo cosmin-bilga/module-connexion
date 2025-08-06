@@ -66,8 +66,8 @@ function connexion_utilisateur()
         </nav>
     </header>
     <main>
-        <h1>PAGE CONNEXION</h1>
         <form action="connexion.php" method="post">
+            <p>Connexion</p>
             <label for="login">Login:</label>
             <input type="text" name="login" id="login" <?php if (isset($_POST["login"])) echo "value=\"" . $_POST["login"] . "\"" ?>>
             <label for="password">Password:</label>
