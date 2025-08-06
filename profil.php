@@ -182,6 +182,7 @@ function check_modification(): string //CAN ONLY BE CALLED ONCE DUE TO INCLUDE E
     <main>
         <h1>PROFIL DE <?php echo $_SESSION["logged_user"]; ?></h1>
         <form action="profil.php" method="post">
+            <p>Modifications Profil</p>
             <label for="login">Login:</label>
             <input type="text" name="login" id="login" <?php echo "value=\"" . $_SESSION["login"] . "\"" ?>>
             <label for="nom">Nom:</label>
