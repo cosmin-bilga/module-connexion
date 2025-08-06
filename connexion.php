@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+include "connexion-tools.php";
+
 $_SESSION["error"] = NULL;
 
 if (isset($_SESSION["logged_user"])) {
@@ -20,27 +22,23 @@ if (isset($_POST["login"]))
             $_SESSION["error"] = $ok;
     } else
         $_SESSION["error"] = "Veuillez introduire votre password";
-//echo "Veuillez introduire votre password";
+
 
 function connexion_utilisateur()
 {
-    include "connexion-tools.php";
+    global $server, $user, $password, $database;
     $conn = new mysqli($server, $user, $password, $database);
     if ($conn->connect_errno) {
-        echo "Echec de connexion à la DB. Veuillez essayer ulterieurement: " . $mysqli->connect_error;
+        echo "Echec de connexion à la DB. Veuillez essayer ulterieurement: " . $conn->connect_error;
         return;
     }
 
     $sql = "SELECT password FROM utilisateurs WHERE login='" . $_POST["login"] . "';";
-    /* $sql = "INSERT INTO utilisateurs(login,nom,prenom,password) VALUES('" . $_POST["login"] . "','" .
-        $_POST["nom"] . "','" .
-        $_POST["prenom"] . "','" .
-        $_POST["password"] . "');"; */
+
     $result = sql_exec($sql, $conn);
     $pass = $result->fetch_assoc();
     $conn->close();
 
-    //echo " --- " . password_verify($pass["password"], $_POST["password"]);
     if (isset($pass["password"]) and (password_verify($_POST["password"], $pass["password"])))
         return "Login ok";
     return "Password incorrect";

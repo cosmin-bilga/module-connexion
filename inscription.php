@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+include "connexion-tools.php";
 
 // Si logged on redirect vers la page d'accueil
 if (isset($_SESSION["logged_user"])) {
@@ -29,8 +30,6 @@ function check_login($conn): string
         return "Veuillez choisir un login";
     else {
         preg_match('/^[a-zA-Z0-9]{5,}$/', $_POST["login"], $matches);
-        //echo "MATCH<br />";
-        //print_r($matches);
         if (!$matches)
             return "Veuillez choisir un login de 5 characteres ou plus, formé de lettre et chiffres uniquement";
         $sql = "SELECT * FROM utilisateurs WHERE login='" . htmlentities($_POST["login"]) . "';";
@@ -75,11 +74,11 @@ function check_inscription(): string
 {
 
     if (count($_POST) > 0) {
-        include "connexion-tools.php";
+        global $server, $user, $password, $database;
         $conn = new mysqli($server, $user, $password, $database);
 
         if ($conn->connect_errno) {
-            echo "Echec de connexion à la DB. Veuillez essayer ulterieurement: " . $mysqli->connect_error;
+            echo "Echec de connexion à la DB. Veuillez essayer ulterieurement: " . $conn->connect_error;
             return "Inscriptioon echoué";
         }
 

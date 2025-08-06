@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+include "connexion-tools.php";
 //print_r($_SESSION);
 //print_r($_POST);
 
@@ -11,21 +12,19 @@ if (!isset($_SESSION["logged_user"])) {
     exit();
 } elseif (isset($_POST["modif"]))
     check_modification();
-else
-    get_info();
+get_info();
 
-
+$server = 'localhost';
 
 function get_info()
 {
-    include "connexion-tools.php";
+    //include "connexion-tools.php";
+    global $server, $user, $password, $database;
     $conn = new mysqli($server, $user, $password, $database);
-
-    //print_r($_POST);
 
     if ($conn->connect_errno) {
         //echo "Echec de connexion à la DB. Veuillez essayer ulterieurement: " . $mysqli->connect_error;
-        $_SESSION["error"] = "Echec de connexion à la DB. Veuillez essayer ulterieurement: " . $mysqli->connect_error;
+        $_SESSION["error"] = "Echec de connexion à la DB. Veuillez essayer ulterieurement: " . $conn->connect_error;
         return "Modification echoué";
     }
 
@@ -105,14 +104,15 @@ function check_modification(): string //CAN ONLY BE CALLED ONCE DUE TO INCLUDE E
     if (count($_POST) > 0) {
         //if ("connexion-tools.php") 
         //print_r(get_included_files());
-        include_once "connexion-tools.php";
+        //include "connexion-tools.php";
+        global $server, $user, $password, $database;
         $conn = new mysqli($server, $user, $password, $database);
 
         //print_r($_POST);
 
         if ($conn->connect_errno) {
             //echo "Echec de connexion à la DB. Veuillez essayer ulterieurement: " . $mysqli->connect_error;
-            $_SESSION["error"] = "Echec de connexion à la DB. Veuillez essayer ulterieurement: " . $mysqli->connect_error;
+            $_SESSION["error"] = "Echec de connexion à la DB. Veuillez essayer ulterieurement: " . $conn->connect_error;
             return "Modification echoué";
         }
 
